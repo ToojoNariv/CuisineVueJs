@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiClient = axios.create({
   baseURL: 'http://127.0.0.1:8000/',
-  // baseURL: 'https://symfony-app-production.up.railway.app//api',
+  // baseURL: 'https://symfony-app-production.up.railway.app',
   headers: { 'Content-Type': 'application/json' }
 });
 
@@ -36,7 +36,7 @@ export default
   getRecette() 
   {
     return apiClient.get('/recettes')
-  },
+  }
 
   // login(filtre) {
   //   return apiClient.post('/login', filtre);

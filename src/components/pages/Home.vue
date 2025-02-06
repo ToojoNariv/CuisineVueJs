@@ -2,11 +2,15 @@
 import { ref, onMounted } from "vue";
 import apiService from '../../servises/apiService';
 
-const products = ref([]);
+const recettes = ref([]);
 
 onMounted(async () => {
-  const response = await apiService.get("/recettes");
-  products.value = response.data;
+  try {
+    const response = await apiService.getRecette();
+    recettes.value = response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des recettes:", error);
+  }
 });
 </script>
 
@@ -14,7 +18,7 @@ onMounted(async () => {
   <div>
     <h2>Liste des Recettes</h2>
     <ul>
-      <li v-for="product in products" :key="product.id">
+      <li v-for="product in recettes" :key="product.id">
         {{ product.nom }} - {{ product.prix }}Ar
       </li>
     </ul>
