@@ -28,8 +28,15 @@ a,
   }
 
   #app {
-    display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+}
+
+.el-table thead th{
+  font-size: 1.2em;
+  height: 2vh;
+  font-family: 'Matt_Trial Semibold';
+  align-items: center;
+  align-content: center;
 }

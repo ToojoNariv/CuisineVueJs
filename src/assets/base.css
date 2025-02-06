@@ -4,7 +4,7 @@
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
 
-  --vt-c-black: #181818;
+  --vt-c-black: #111111;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
@@ -66,21 +66,192 @@ body {
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.el-table .el-table__cell
+{
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 8px 0;
+  position: relative;
+  text-overflow: ellipsis;
+  text-align: center !important;
+  vertical-align: middle;
+  z-index: var(--el-table-index);
+}
+.el-button 
+{
+  height: 7vh !important;
+}
+
+.el-button>span 
+{
+  align-items: center;
+  display: inline-flex;
+  font-size: 1.2em;
+  color: black;
+  font-family:'Matt_Trial Semibold';
+}
+
+.el-dropdown-menu {
+  --el-dropdown-menu-box-shadow: var(--el-box-shadow-light);
+  --el-dropdown-menuItem-hover-fill: black;
+  --el-dropdown-menuItem-hover-color: white;
+  --el-dropdown-menu-index: 10;
+  font-family:'Matt_Trial Semibold' !important;
+  display: flex;
+  color: black !important;
+  flex-direction: column;
+  font-size: 1.1em;
+  line-height: 1;
+  width: 12vw !important;
+  position: relative;
+  vertical-align: top;
+}
+.el-dropdown-item {
+  color: black !important;
+  
+}
+
+.carte
+{
+  text-align: left;
+  margin-left: 2vw;
+  width: 20vw;
+}
+.soustitre
+{
+  font-family:'Matt_Trial Semibold';
+  margin-top: 2vh;
+}
+.soustitre2
+{
+  font-family:'Matt_Trial Black';
+  margin-top: 2vh;
+  font-size: 1.2em;
+  color: #ececec;
+  width: 7vw;
+}
+.montant
+{
+  font-family:'Matt_Trial Black';
+  font-size: 3em;
+  color: rgb(249, 249, 249);
+  margin-top: -1vh;
+  
+}
+
+@property --k {
+	syntax: '<number>';
+	initial-value: 0;
+	inherits: false
+}
+.number {
+    transition: all 1s ease;
+    opacity: 0;
+}
+
+.number
+{
+    opacity: 1;
+}
+
+@keyframes k { to { --k: 1 } }
+
+.el-dialog {
+  --el-dialog-width: 50%;
+  --el-dialog-margin-top: 25vh !important;
+  --el-dialog-bg-color: #262626 !important;
+  --el-dialog-box-shadow: var(--el-box-shadow);
+  --el-dialog-font-line-height: var(--el-font-line-height-primary);
+  --el-dialog-padding-primary: 16px;
+  --el-dialog-border-radius: 10px;
+  background: var(--el-dialog-bg-color);
+  border-radius: var(--el-dialog-border-radius);
+  box-shadow: var(--el-dialog-box-shadow);
+  height: 45%;
+  box-sizing: border-box;
+  margin: var(--el-dialog-margin-top, 15vh) auto 50px;
+  overflow-wrap: break-word;
+  padding: 3vw !important;
+  position: relative;
+  width: var(--el-dialog-width, 50%);
+}
+
+.el-input__wrapper {
+  align-items: center;
+  background-color: #3a3a3a !important;
+  background-image: none;
+  border-radius: 10px !important;
+  box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset;
+  cursor: text;
+  display: inline-flex;
+  flex-grow: 1;
+  transform: translateZ(0);
+  margin-top: 1vh !important;
+  margin-bottom: 2vh;
+  transition: var(--el-transition-box-shadow);
+}
+
+.el-input__inner {
+  --el-input-inner-height: calc(var(--el-input-height, 32px) - 2px);
+  background: none;
+  border: none;
+  font-family: 'Matt_Trial Medium' !important;
+  color: #ececec !important;
+  box-sizing: border-box;
+  flex-grow: 1;
+  text-align: center;
+  font-size: inherit;
+  height: 6vh !important;
+  line-height: var(--el-input-inner-height);
+  outline: none;
+  padding: 0;
+  width: 100%;
+}
+
+.el-dialog__title {
+  color: rgb(241, 241, 241) !important;
+  font-size: 1.6em !important;
+  font-family: 'Matt_Trial black' !important;
+  line-height: var(--el-dialog-font-line-height);
+}
+
+.el-button--primary {
+  --el-button-bg-color: #00f4f4 !important;
+  --el-button-active-color: rgb(0 125 255) !important;
+  --el-button-hover-bg-color: rgb(0 125 255) !important;
+  border: none !important;
+}
+
+h1
+{
+   font-family: 'Matt_Trial Black';
+   color: rgb(254, 254, 254);
+   font-size: 4em;
+   width: 50%;
+   line-height: 7vh;
+   margin-bottom: 4vh;
+}
+
+.h1{
+  margin-left: -12vw;
+  margin-top: -18vh;
+  margin-bottom: 6vh;
+}
+
+.el-scrollbar
+{
+  width: 100%;
+  height: 90% !important;
+  margin-top: 2vh;
+}
+
+.el-input .coti
+{
+  width: 100% !important;
 }
