@@ -9,9 +9,8 @@ import router from './router';
 import PrimeVue from 'primevue/config';
 
 const app = createApp(App);
-app.use(PrimeVue);
-app.provide('filters', filters);
 app.use(ElementPlus);
 app.use(router);
+app.use(PrimeVue);
 
 app.mount('#app');
