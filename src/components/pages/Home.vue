@@ -16,7 +16,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <h2>Liste des Recettes</h2>
+    <h1>Liste des Recettes</h1>
     <ul>
       <li v-for="product in recettes" :key="product.id">
         {{ product.nom }} - {{ product.prix }}Ar
