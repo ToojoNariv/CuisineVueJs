@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import PlatModal from '../modals/Platmodals.vue'
+import apiService from '../../servises/apiService';
 import InsertionCard from '../materials/InsertionCard.vue'
 import InsertionIngredients from '../materials/InsertionIngredients.vue'
 import InsertionRecette from '../materials/InsertionRecette.vue'
@@ -11,6 +12,7 @@ const isModalVisible = ref(false);
 const showModal = () => {
   isModalVisible.value = true;
 }
+
 </script>
 
 <template>

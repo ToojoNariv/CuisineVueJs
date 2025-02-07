@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://symfony-app-production.up.railway.app',
+  baseURL: 'https://symfony-app-production.up.railway.app/',
+  // baseURL: 'http://127.0.0.1:8000/',
   headers: { 'Content-Type': 'application/json' }
 });
 
@@ -34,14 +35,15 @@ export default
 
   getRecette() 
   {
-    return apiClient.get('/recettes')
+    return apiClient.get('recettes')
   },
 
-  insertionRecette(filtre) 
-  {
-    return apiClient.post('/insertrecette',{params: filtre});
+  insertionRecette(filtre) {
+    return apiClient.post('insertplat', filtre, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
   }
-
+  
   // update(filtre) {
   //   return apiClient.post('/update',filtre);
   // }
