@@ -56,7 +56,7 @@ import FloatLabel from 'primevue/floatlabel';
 import Button from 'primevue/button';
 import InputGroup from 'primevue/inputgroup';
 import InputNumber from 'primevue/inputnumber';
-import InputText from 'primevue/inputText';
+import InputText from 'primevue/inputtext';
 import FileUpload from 'primevue/fileupload';
 
 

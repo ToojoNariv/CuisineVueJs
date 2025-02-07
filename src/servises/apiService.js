@@ -39,7 +39,7 @@ export default
 
   insertionRecette(filtre) 
   {
-    return apiClient.post('/insertrecette', filtre);
+    return apiClient.post('/insertrecette',{params: filtre});
   }
 
   // update(filtre) {
