@@ -7,6 +7,9 @@ import InputGroup from 'primevue/inputgroup';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import FileUpload from 'primevue/fileupload';
+import Toast from 'primevue/toast';
+import { useToast } from 'primevue/usetoast';
+
 
 const nom = ref('');
 const prix = ref(null);
@@ -29,6 +32,7 @@ onMounted(async () => {
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
+const toast = useToast();
 
 const onPhotoUpload = (event) => {
     photo.value = event.files[0];
@@ -79,9 +83,10 @@ const enregistrerPlat = async () => {
 
   try {
     const response = await apiService.insertionRecette(formData);
-    console.log(response.data);
+    toast.add({ severity: 'success', summary: 'Enregistré avec succès', detail: 'Miditra tsarz', life: 3000 });
   } catch (error) {
     console.error('Erreur lors de l’insertion', error);
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
   } finally {
     setTimeout(() => {
       loading.value = false;

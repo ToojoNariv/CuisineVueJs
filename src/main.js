@@ -7,8 +7,10 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 
 const app = createApp(App);
+app.use(ToastService);
 app.use(ElementPlus);
 // app.use(router);
 app.use(PrimeVue, {
