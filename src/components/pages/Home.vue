@@ -37,6 +37,7 @@ const showModal = () => {
 export default {
   name: 'Home',
 };
+
 </script>
 
 <style scoped>

@@ -38,7 +38,7 @@
     border-radius: 5px;
     font-size: 14px;
     font-weight: bold;
-    font-family: 'Matt_Trial black' !important;
+    font-family: 'Matt_Trial_Black' !important;
   }
   
   .card4:hover .overlay 

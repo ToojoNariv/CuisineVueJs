@@ -35,11 +35,12 @@ export default
   getRecette() 
   {
     return apiClient.get('/recettes')
-  }
+  },
 
-  // login(filtre) {
-  //   return apiClient.post('/login', filtre);
-  // },
+  insertionRecette(filtre) 
+  {
+    return apiClient.post('/insertrecette', filtre);
+  }
 
   // update(filtre) {
   //   return apiClient.post('/update',filtre);

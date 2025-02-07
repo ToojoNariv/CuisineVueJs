@@ -1,4 +1,3 @@
-/* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -21,7 +20,6 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
-/* semantic color variables for this project */
 :root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -37,7 +35,7 @@
 }
 
 @font-face {
-  font-family: 'Matt_Trial Black';
+  font-family: 'Matt_Trial_Black';
   src: url('fonts/Matt_Trial-Black-BF670897ed2f663.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -139,12 +137,12 @@ body {
 }
 .soustitre
 {
-  font-family:'Matt_Trial Semibold';
+  font-family:'Matt_Trial-Semibold';
   margin-top: 2vh;
 }
 .soustitre2
 {
-  font-family:'Matt_Trial Black';
+  font-family:'Matt_Trial_Black';
   margin-top: 2vh;
   font-size: 1.2em;
   color: #ececec;
@@ -152,7 +150,7 @@ body {
 }
 .montant
 {
-  font-family:'Matt_Trial Black';
+  font-family:'Matt_Trial_Black';
   font-size: 3em;
   color: rgb(249, 249, 249);
   margin-top: -1vh;
@@ -178,12 +176,11 @@ body {
 
 .el-dialog {
   --el-dialog-width: 50%;
-  --el-dialog-margin-top: 25vh !important;
-  --el-dialog-bg-color: #262626 !important;
+  --el-dialog-bg-color: #f8f8f8 !important;
   --el-dialog-box-shadow: var(--el-box-shadow);
   --el-dialog-font-line-height: var(--el-font-line-height-primary);
   --el-dialog-padding-primary: 16px;
-  --el-dialog-border-radius: 10px;
+  --el-dialog-border-radius: 10px !important;
   background: var(--el-dialog-bg-color);
   border-radius: var(--el-dialog-border-radius);
   box-shadow: var(--el-dialog-box-shadow);
@@ -194,6 +191,7 @@ body {
   padding: 3vw !important;
   position: relative;
   width: var(--el-dialog-width, 50%);
+  height: auto;
 }
 
 .el-input__wrapper {
@@ -216,7 +214,7 @@ body {
   background: none;
   border: none;
   font-family: 'Matt_Trial Medium' !important;
-  color: #ececec !important;
+  color: #1b1b1b !important;
   box-sizing: border-box;
   flex-grow: 1;
   text-align: center;
@@ -229,9 +227,9 @@ body {
 }
 
 .el-dialog__title {
-  color: rgb(241, 241, 241) !important;
+  color: rgb(17, 17, 17) !important;
   font-size: 1.6em !important;
-  font-family: 'Matt_Trial black' !important;
+  font-family: 'Matt_Trial_Black' !important;
   line-height: var(--el-dialog-font-line-height);
 }
 
@@ -244,7 +242,7 @@ body {
 
 h1
 {
-   font-family: 'Matt_Trial Black';
+   font-family: 'Matt_Trial_Black';
    color: rgb(254, 254, 254);
    font-size: 4em;
    width: 50%;
@@ -268,4 +266,20 @@ h1
 .el-input .coti
 {
   width: 100% !important;
+}
+
+.p-button:not(:disabled) {
+  background: rgb(24, 24, 24) !important;
+  border: none !important;
+  color: var(--p-button-primary-hover-color);
+}
+.p-button:not(:disabled):hover {
+  background: rgba(0, 255, 34) !important;
+  border: none !important;
+  color: var(--p-button-primary-hover-color);
+}
+
+.p-inputgroup
+{
+  margin-bottom: 2vh;
 }
