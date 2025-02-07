@@ -17,7 +17,7 @@ RUN npm ci
 
 # Copy local code to the container image.
 COPY . ./
-
+RUN npm install primevue
 # Build the app.
 RUN npm run build
 

@@ -67,7 +67,6 @@ const photo = ref(null);
 const assets = ref(null);
 const loading = ref(false);
 
-
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
