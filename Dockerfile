@@ -1,31 +1,33 @@
-# Use the Node alpine official image
-# https://hub.docker.com/_/node
-FROM node:lts-alpine AS build
+# Étape 1 : Utiliser une image de base avec Node.js
+FROM node:16 AS build-stage
 
-# Set config
-ENV NPM_CONFIG_UPDATE_NOTIFIER=false
-ENV NPM_CONFIG_FUND=false
-
-# Create and change to the app directory.
+# Étape 2 : Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copy the files to the container image
+# Étape 3 : Copier les fichiers de configuration du projet
 COPY package*.json ./
+COPY vite.config.js ./
 
-# Install packages
-RUN npm ci
+# Étape 4 : Installer les dépendances
+RUN npm install
 
-# Copy local code to the container image.
-COPY . ./
-RUN npm install primevue
-# Build the app.
+# Étape 5 : Copier le reste des fichiers du projet
+COPY . .
+
+# Étape 6 : Nettoyer le cache et réinstaller les dépendances (optionnel)
+RUN npm cache clean --force && npm install
+
+# Étape 7 : Construire l'application
 RUN npm run build
 
-# Use the Caddy image
-FROM caddy
+# Étape 8 : Utiliser une image légère pour l'exécution
+FROM nginx:alpine AS production-stage
 
-# Create and change to the app directory.
-WORKDIR /app
+# Étape 9 : Copier les fichiers construits dans le répertoire de Nginx
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Copy files to the container image.
-COPY --from=build /app/dist ./dist
+# Étape 10 : Exposer le port 80
+EXPOSE 80
+
+# Étape 11 : Démarrer Nginx
+CMD ["nginx", "-g", "daemon off;"]
