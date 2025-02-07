@@ -46,9 +46,9 @@
   left: 50%;
   background-color: rgb(0, 255, 34 , 0.4);
   transform: translate(-50%, -50%);
-  font-size: 5em;
-  line-height: 9vh;
+  font-size: 6em;
+  line-height: 10vh;
   /* background-color: transparent; */
-  padding: 10px 20px;
+  padding: 10px 30px;
 }
 </style>

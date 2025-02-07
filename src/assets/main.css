@@ -1,5 +1,13 @@
 @import './base.css';
 
+@font-face {
+  font-family: 'Matt_Trial_bold';
+  src: url('fonts/Matt_Trial-ExtraBold-BF670897ed28442.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 #app {
   width: 95%;
   margin: 0 auto;
@@ -34,7 +42,7 @@ a,
 .el-table thead th{
   font-size: 1.2em;
   height: 2vh;
-  font-family: 'Matt_Trial Semibold';
+  font-family: 'Matt_Trial_bold';
   align-items: center;
   align-content: center;
 }

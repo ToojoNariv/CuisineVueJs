@@ -49,7 +49,7 @@
     font-size: 4em;
     line-height: 9vh;
     /* background-color: transparent; */
-    padding: 10px 20px;
+    padding: 10px 40px;
   }
   </style>
   

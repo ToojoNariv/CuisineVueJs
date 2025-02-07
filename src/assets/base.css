@@ -36,6 +36,19 @@
   --section-gap: 160px;
 }
 
+@font-face {
+  font-family: 'Matt_Trial Black';
+  src: url('fonts/Matt_Trial-Black-BF670897ed2f663.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Matt_Trial Semibold';
+  src: url('fonts/Matt_TrialVariable-Roman-BF670897ecee147.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @media (prefers-color-scheme: dark) 
 {
   :root {

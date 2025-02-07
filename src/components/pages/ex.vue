@@ -1,36 +1,48 @@
 <script setup>
-import { ref } from "vue";
-import PlatModal from '../modals/Platmodals.vue'
+import { ref, onMounted } from "vue";
+import apiService from '../../servises/apiService';
 import InsertionCard from '../materials/InsertionCard.vue'
 import InsertionIngredients from '../materials/InsertionIngredients.vue'
 import InsertionRecette from '../materials/InsertionRecette.vue'
 import Stat from '../materials/Statistique.vue'
 
-const isModalVisible = ref(false);
+const recettes = ref([]);
 
-const showModal = () => {
-  isModalVisible.value = true;
-}
+onMounted(async () => {
+  try {
+    const response = await apiService.getRecette();
+    recettes.value = response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des recettes:", error);
+  }
+});
 </script>
 
 <template>
+  <div>
+    <ul>
+      <li v-for="product in recettes" :key="product.id">
+        {{ product.nom }} - {{ product.prix }}Ar
+      </li>
+    </ul>
+  </div>
   <div class="row">
     <div class="column">
       <div class="row">
         <h1>Gestion Sakafo</h1>
       </div>
 
-      <InsertionCard @click="showModal" />
+      <InsertionCard/>
     </div>
     <div>
-      <InsertionIngredients />
+      <InsertionIngredients/>
     </div>
     <div class="column">
-      <InsertionRecette />
-      <Stat />
+      <InsertionRecette/>
+      <Stat/>
     </div>
   </div>
-  <PlatModal v-model="isModalVisible" />
+
 </template>
 
 <script>
@@ -40,11 +52,13 @@ export default {
 </script>
 
 <style scoped>
-.row {
+.row
+{
   display: flex;
   flex-direction: row;
 }
-.column {
+.column
+{
   display: flex;
   flex-direction: column;
 }

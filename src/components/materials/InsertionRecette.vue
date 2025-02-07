@@ -30,7 +30,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background: rgba(0, 255, 34, 0.6);
+    background: rgba(255, 0, 225, 0.6);
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -43,12 +43,12 @@
   {
     top: 50%;
     left: 50%;
-    background-color: rgb(0, 255, 34 , 0.4);
+    background-color: rgba(255, 0, 225, 0.6);
     transform: translate(-50%, -50%);
     font-size: 5em;
-    line-height: 9vh;
+    line-height: 10vh;
     /* background-color: transparent; */
-    padding: 10px 20px;
+    padding: 10px 86px;
   }
   </style>
   
