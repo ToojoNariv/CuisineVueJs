@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <home/>
   </div>
 </template>
+
+<script setup>
+import Home from "./components/pages/Home.vue";
+</script>
 
 
