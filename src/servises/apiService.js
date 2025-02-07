@@ -42,6 +42,11 @@ export default
     return apiClient.post('insertplat', filtre, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
+  },
+  insertionIngredient(filtre) {
+    return apiClient.post('insertingredient', filtre, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
   }
   
   // update(filtre) {

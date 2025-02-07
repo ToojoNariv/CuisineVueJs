@@ -4,30 +4,17 @@ import apiService from '../../servises/apiService';
 import FloatLabel from 'primevue/floatlabel';
 import Button from 'primevue/button';
 import InputGroup from 'primevue/inputgroup';
-import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import FileUpload from 'primevue/fileupload';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
-
 const nom = ref('');
-const prix = ref(null);
-const tempsCuisson = ref(null);
 const photo = ref(null);
 const assets = ref(null);
 const loading = ref(false);
 
-const recettes = ref([]);
-
-onMounted(async () => {
-  try {
-    const response = await apiService.getRecette();
-    recettes.value = response.data;
-  } catch (error) {
-    console.error("Erreur lors de la récupération des recettes:", error);
-  }
-});
+const ingredients = ref([]);
 
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
@@ -65,13 +52,11 @@ const updateVisibility = (value) => {
   emit('update:modelValue', value);
 };
 
-const enregistrerPlat = async () => {
+const enregistrerIngredient = async () => {
   loading.value = true;
 
   let formData = new FormData();
   formData.append('nom', nom.value);
-  formData.append('prix', prix.value);
-  formData.append('tempsCuisson', tempsCuisson.value);
 
   if (photo.value) {
     formData.append('photo', photo.value);
@@ -82,11 +67,11 @@ const enregistrerPlat = async () => {
   }
 
   try {
-    const response = await apiService.insertionRecette(formData);
-    toast.add({ severity: 'success', summary: 'Enregistré avec succès', detail: 'Niditra tsara', life: 5000 });
+    const response = await apiService.insertionIngredient(formData);
+    toast.add({ severity: 'success', summary: 'Enregistré avec succès', detail: 'Ingrédient ajouté avec succès', life: 5000 });
   } catch (error) {
     console.error('Erreur lors de l’insertion', error);
-    toast.add({ severity: 'error', summary: 'Erreur', detail: 'Tsy Niditrat', life: 5000 });
+    toast.add({ severity: 'error', summary: 'Erreur', detail: 'Erreur lors de l’ajout de l’ingrédient', life: 5000 });
   } finally {
     setTimeout(() => {
       loading.value = false;
@@ -94,32 +79,16 @@ const enregistrerPlat = async () => {
     }, 2000);
   }
 };
-
 </script>
-
 
 <template>
   <Toast />
-  <el-dialog :model-value="localVisible" title="Insertion Plat" modal-class="overide-animation" @update:model-value="updateVisibility" @close="hideModal">
+  <el-dialog :model-value="localVisible" title="Insertion Ingredient" modal-class="overide-animation" @update:model-value="updateVisibility" @close="hideModal">
     <div class="card flex flex-wrap justify-center items-end gap-4">
       <InputGroup>
         <FloatLabel variant="on">
           <InputText id="nom" v-model="nom" />
-          <label for="nom">Nom du Plat</label>
-        </FloatLabel>
-      </InputGroup>
-
-      <InputGroup>
-        <FloatLabel variant="on">
-            <InputNumber v-model="prix" id="prix"/>
-            <label for="prix">Prix en Ariary</label>
-        </FloatLabel>
-      </InputGroup>
-
-      <InputGroup>
-        <FloatLabel variant="on">
-          <InputNumber id="tempsCuisson" v-model="tempsCuisson" />
-          <label for="tempsCuisson">Temps de Cuisson (secondes)</label>
+          <label for="nom">Nom de l'Ingrédient</label>
         </FloatLabel>
       </InputGroup>
 
@@ -139,19 +108,13 @@ const enregistrerPlat = async () => {
           </FileUpload>
       </div>
 
-      <li v-for="product in recettes" :key="product.id">
-        {{ product.nom }} - {{ product.prix }}Ar
-      </li>
-
       <div class="actions">
-        <Button type="button" label="Enregistrer" icon="pi pi-search" :loading="loading" @click="enregistrerPlat" />
+        <Button type="button" label="Enregistrer" icon="pi pi-search" :loading="loading" @click="enregistrerIngredient" />
         <Button label="Annuler" class="p-button-secondary" @click="hideModal" />
       </div>
     </div>
-
   </el-dialog>
 </template>
-
 
 <style scoped>
 .actions {
@@ -160,6 +123,3 @@ const enregistrerPlat = async () => {
   margin-top: 20px;
 }
 </style>
-
-
-

@@ -1,17 +1,23 @@
 <script setup>
 import { ref } from "vue";
 import PlatModal from '../modals/Platmodals.vue'
+import IngredientModal from '../modals/Ingredientmodals.vue'
 import apiService from '../../servises/apiService';
 import InsertionCard from '../materials/InsertionCard.vue'
 import InsertionIngredients from '../materials/InsertionIngredients.vue'
 import InsertionRecette from '../materials/InsertionRecette.vue'
 import Stat from '../materials/Statistique.vue'
 
-const isModalVisible = ref(false);
+const isPlatModalVisible = ref(false);
+const isIngredientModalVisible = ref(false);
 
-const showModal = () => {
-  isModalVisible.value = true;
-}
+const showPlatModal = () => {
+  isPlatModalVisible.value = true;
+};
+
+const showIngredientModal = () => {
+  isIngredientModalVisible.value = true;
+};
 
 </script>
 
@@ -22,17 +28,18 @@ const showModal = () => {
         <h1>Gestion Sakafo</h1>
       </div>
 
-      <InsertionCard @click="showModal" />
+      <InsertionCard @click="showPlatModal" />
     </div>
     <div>
-      <InsertionIngredients />
+      <InsertionIngredients @click="showIngredientModal" />
     </div>
     <div class="column">
       <InsertionRecette />
       <Stat />
     </div>
   </div>
-  <PlatModal v-model="isModalVisible" />
+  <PlatModal v-model="isPlatModalVisible" />
+  <IngredientModal v-model="isIngredientModalVisible" />
 </template>
 
 <script>
