@@ -9,7 +9,7 @@ import FileUpload from 'primevue/fileupload';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
-const nom = ref('');
+const nomingredient = ref('');
 const photo = ref(null);
 const assets = ref(null);
 const loading = ref(false);
@@ -56,7 +56,7 @@ const enregistrerIngredient = async () => {
   loading.value = true;
 
   let formData = new FormData();
-  formData.append('nom', nom.value);
+  formData.append('nomingredient', nomingredient.value);
 
   if (photo.value) {
     formData.append('photo', photo.value);
@@ -67,6 +67,7 @@ const enregistrerIngredient = async () => {
   }
 
   try {
+    console.log('URL appelée:', apiService.insertionIngredient());
     const response = await apiService.insertionIngredient(formData);
     toast.add({ severity: 'success', summary: 'Enregistré avec succès', detail: 'Ingrédient ajouté avec succès', life: 5000 });
   } catch (error) {
@@ -87,8 +88,8 @@ const enregistrerIngredient = async () => {
     <div class="card flex flex-wrap justify-center items-end gap-4">
       <InputGroup>
         <FloatLabel variant="on">
-          <InputText id="nom" v-model="nom" />
-          <label for="nom">Nom de l'Ingrédient</label>
+          <InputText id="nomingredient" v-model="nomingredient" />
+          <label for="nomingredient">Nom de l'Ingrédient</label>
         </FloatLabel>
       </InputGroup>
 

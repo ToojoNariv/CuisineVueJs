@@ -18,17 +18,6 @@ const photo = ref(null);
 const assets = ref(null);
 const loading = ref(false);
 
-const recettes = ref([]);
-
-onMounted(async () => {
-  try {
-    const response = await apiService.getRecette();
-    recettes.value = response.data;
-  } catch (error) {
-    console.error("Erreur lors de la récupération des recettes:", error);
-  }
-});
-
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
@@ -138,10 +127,6 @@ const enregistrerPlat = async () => {
               </template>
           </FileUpload>
       </div>
-
-      <li v-for="product in recettes" :key="product.id">
-        {{ product.nom }} - {{ product.prix }}Ar
-      </li>
 
       <div class="actions">
         <Button type="button" label="Enregistrer" icon="pi pi-search" :loading="loading" @click="enregistrerPlat" />
