@@ -43,12 +43,10 @@ watch(() => props.modelValue, (newVal) => {
   localVisible.value = newVal;
 });
 
-// Fonction pour fermer la modale
 const hideModal = () => {
   emit('update:modelValue', false);
 };
 
-// Fonction pour mettre à jour la visibilité
 const updateVisibility = (value) => {
   localVisible.value = value;
   emit('update:modelValue', value);
@@ -75,7 +73,7 @@ const enregistrerPlat = async () => {
     toast.add({ severity: 'success', summary: 'Enregistré avec succès', detail: 'Niditra tsara', life: 5000 });
   } catch (error) {
     console.error('Erreur lors de l’insertion', error);
-    toast.add({ severity: 'error', summary: 'Erreur', detail: 'Tsy Niditrat', life: 5000 });
+    toast.add({ severity: 'error', summary: 'Erreur', detail: 'Tsy niditra tsara', life: 5000 });
   } finally {
     setTimeout(() => {
       loading.value = false;
