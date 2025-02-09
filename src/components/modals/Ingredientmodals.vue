@@ -12,6 +12,7 @@ import AutoComplete from 'primevue/autocomplete';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
+
 const nom = ref('');
 const photo = ref(null);
 const assets = ref(null);
@@ -56,7 +57,7 @@ const searchIngredients = async (event) => {
     }
     try {
         const response = await apiService.getIngredientByName(event.query);
-        filteredIngredients.value = response.data;
+        filteredIngredients.value = response.data.map(ingredient => ingredient.nom);
     } catch (error) {
         console.error('Erreur lors du chargement des ingrédients', error);
     }
@@ -128,29 +129,35 @@ const enregistrerIngredient = async () => {
       </div>
 
       <h2>Ajouter des stocks</h2>
+      <template class="row">
+            <InputGroup>
+                <FloatLabel variant="on">
+                    <AutoComplete 
+                    v-model="lesIngredient" 
+                    inputId="ingredient" 
+                    :suggestions="filteredIngredients" 
+                    @complete="searchIngredients" 
+                    field="nom"/>                
+                <label for="ingredient">Nom de l'Ingrédient</label>
+                </FloatLabel>
+            </InputGroup>
 
-      <InputGroup>
-        <FloatLabel variant="on">
-          <AutoComplete v-model="lesIngredient" inputId="ingredient" :suggestions="filteredIngredients" @complete="searchIngredients" field="nom"/>
-          <label for="ingredient">Nom de l'Ingrédient</label>
-        </FloatLabel>
-      </InputGroup>
-
-      <InputGroup>
-        <FloatLabel variant="on">
-          <InputNumber v-model="stockQuantity" showButtons buttonLayout="horizontal" :min="0" :max="999"/>
-          <label for="stock">Quantité en stock</label>
-          <template #incrementbuttonicon>
-                <span class="pi pi-plus" />
-            </template>
-            <template #decrementbuttonicon>
-                <span class="pi pi-minus" />
-            </template>
-        </FloatLabel>
-      </InputGroup>
+            <InputGroup>
+                <FloatLabel class="stock" variant="on">
+                <InputNumber v-model="stockQuantity" showButtons buttonLayout="horizontal" :min="0" :max="999"/>
+                <label for="stock">Quantité en stock</label>
+                <template #incrementbuttonicon>
+                        <span class="pi pi-plus" />
+                    </template>
+                    <template #decrementbuttonicon>
+                        <span class="pi pi-minus" />
+                    </template>
+                </FloatLabel>
+            </InputGroup>
+    </template>
 
       <div class="actions">
-        {# <Button type="button" label="Enregistrer" icon="pi pi-search" :loading="loading" @click="enregistrerStock" /> #}
+        <Button type="button" label="Stocker" icon="pi pi-search" :loading="loading" @click="enregistrerStock" />
         <Button label="Annuler" class="p-button-secondary" @click="hideModal" />
       </div>
     </div>
@@ -162,5 +169,13 @@ const enregistrerIngredient = async () => {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+}
+.row {
+    display:flex;
+    flex-direction: row;
+}
+.stock
+{
+    margin-left: 1vw !important;
 }
 </style>

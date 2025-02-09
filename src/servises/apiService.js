@@ -49,13 +49,12 @@ export default
     });
   },
   
-  getIngredientByName(nom) 
-  {
-    return apiClient.get('ingredientbyname', 
-    {
-      params: { nom: "O" } 
+  getIngredientByName(nom) {
+    return apiClient.get('ingredientbyname', {
+      params: { nom }
     });
   }
+  
   // update(filtre) {
   //   return apiClient.post('/update',filtre);
   // }
