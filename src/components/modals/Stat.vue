@@ -101,5 +101,12 @@ watch(() => props.modelValue, (newVal) => {
         </div>
     </Dialog>
 </template>
-
-
+<style scoped>
+canvas 
+{
+    display: block;
+    box-sizing: border-box;
+    height: 48vh !important;
+    width: 61vw !important;
+}
+</style>
