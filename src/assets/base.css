@@ -304,3 +304,11 @@ h2
 {
     text-align: center !important;
 }
+
+.p-chart
+{
+    display: flex !important;
+    box-sizing: border-box ;
+    height: 48vh !important;
+    width: 61vw !important;
+}
