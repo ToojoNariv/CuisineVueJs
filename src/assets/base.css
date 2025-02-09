@@ -47,6 +47,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Matt_Trial';
+  src: url('fonts/Matt_Trial-Regular-BF670897ed2b9ca.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @media (prefers-color-scheme: dark) 
 {
   :root {
@@ -283,26 +290,55 @@ h2
 {
   width: 100% !important;
 }
+.p-button {
+  font-family: 'Matt_Trial'!important;
+}
 
+.p-inputtext {
+  font-family: 'Matt_Trial'!important;
+}
+
+.p-inputnumber {
+  font-family: 'Matt_Trial'!important;
+}
 .p-button:not(:disabled) {
   background: rgb(24, 24, 24) !important;
   border: none !important;
+  font-family: 'Matt_Trial'!important;
   color: var(--p-button-primary-hover-color);
 }
 .p-button:not(:disabled):hover {
   background: rgba(0, 255, 34) !important;
   border: none !important;
+  font-family: 'Matt_Trial'!important;
   color: var(--p-button-primary-hover-color);
 }
 
 .p-inputgroup
 {
   margin-bottom: 2vh;
+  font-family: 'Matt_Trial' !important;
 }
 
 .p-inputnumber-horizontal .p-inputnumber-input 
 {
     text-align: center !important;
+    font-family: 'Matt_Trial' !important;
+}
+
+label 
+{
+  font-family: 'Matt_Trial' !important;
+}
+
+span 
+{
+  font-family: 'Matt_Trial' !important;
+}
+
+Button 
+{
+  font-family: 'Matt_Trial_Black' !important;
 }
 
 .p-chart

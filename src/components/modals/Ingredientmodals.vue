@@ -109,7 +109,7 @@ const enregistrerIngredient = async () => {
 
   try {
     const response = await apiService.insertionIngredient(formData);
-    toast.add({ severity: 'success', summary: 'Enregistré avec succès', detail: 'Niditra tsara', life: 5000 });
+    toast.add({ severity: 'success', summary: 'Ingredient enregistré avec succès', detail: 'Niditra tsara', life: 5000 });
   } catch (error) {
     console.error('Erreur lors de l’insertion', error);
     toast.add({ severity: 'error', summary: 'Erreur', detail: 'Tsy niditra tsara', life: 5000 });
