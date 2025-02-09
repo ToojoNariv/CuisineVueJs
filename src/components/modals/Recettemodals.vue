@@ -23,21 +23,19 @@ const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const localVisible = ref(props.modelValue);
 
-// Fonction pour rechercher des plats
 const searchDishes = async (event) => {
   if (!event.query.trim()) {
     filteredDishes.value = [];
     return;
   }
   try {
-    const response = await apiService.getDishByName(event.query);
+    const response = await apiService.getPlatByName(event.query);
     filteredDishes.value = response.data;
   } catch (error) {
     console.error('Erreur lors du chargement des plats', error);
   }
 };
 
-// Fonction pour rechercher des ingrédients
 const searchIngredients = async (event) => {
   if (!event.query.trim()) {
     filteredIngredients.value = [];
