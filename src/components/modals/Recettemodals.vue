@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import apiService from '../../servises/apiService';
 import FloatLabel from 'primevue/floatlabel';
 import Button from 'primevue/button';
@@ -10,14 +10,15 @@ import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
-const selectedDish = ref(null); 
-const selectedIngredient = ref(null); 
-const ingredientQuantity = ref(null); 
-const loading = ref(false); 
-const filteredDishes = ref([]); 
-const filteredIngredients = ref([]);
-const toast = useToast(); 
+// Références pour les données du formulaire
+const selectedDish = ref(null); // Plat sélectionné
+const ingredientsList = ref([{ ingredient: null, quantity: null }]); // Liste des ingrédients et quantités
+const loading = ref(false); // État de chargement
+const filteredDishes = ref([]); // Liste des plats filtrés
+const filteredIngredients = ref([]); // Liste des ingrédients filtrés
+const toast = useToast(); // Toast pour les notifications
 
+// Props et emits pour la gestion de la modal
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const localVisible = ref(props.modelValue);
@@ -50,10 +51,15 @@ const searchIngredients = async (event) => {
   }
 };
 
+// Fonction pour ajouter un nouvel ingrédient
+const addIngredientField = () => {
+  ingredientsList.value.push({ ingredient: null, quantity: null });
+};
+
 // Fonction pour créer une recette
 const createRecipe = async () => {
-  if (!selectedDish.value || !selectedIngredient.value || ingredientQuantity.value === null) {
-    toast.add({ severity: 'warn', summary: 'Erreur', detail: 'Veuillez sélectionner un plat, un ingrédient et entrer une quantité.', life: 5000 });
+  if (!selectedDish.value || ingredientsList.value.some(item => !item.ingredient || item.quantity === null)) {
+    toast.add({ severity: 'warn', summary: 'Erreur', detail: 'Veuillez sélectionner un plat et remplir tous les ingrédients.', life: 5000 });
     return;
   }
 
@@ -61,8 +67,10 @@ const createRecipe = async () => {
   try {
     const recipeData = {
       dishId: selectedDish.value.id,
-      ingredientId: selectedIngredient.value.id,
-      quantity: ingredientQuantity.value
+      ingredients: ingredientsList.value.map(item => ({
+        ingredientId: item.ingredient.id,
+        quantity: item.quantity
+      }))
     };
 
     await apiService.createRecipe(recipeData);
@@ -106,40 +114,42 @@ watch(() => props.modelValue, (newVal) => {
         </FloatLabel>
       </InputGroup>
 
-      <!-- Sélection de l'ingrédient -->
-      <InputGroup>
-        <FloatLabel variant="on">
-          <AutoComplete
-            v-model="selectedIngredient"
-            inputId="ingredient"
-            :suggestions="filteredIngredients"
-            @complete="searchIngredients"
-            optionLabel="nom"
-            forceSelection
-          />
-          <label for="ingredient">Cherchez un ingrédient</label>
-        </FloatLabel>
-      </InputGroup>
+      <template v-for="(item, index) in ingredientsList" :key="index">
+        <div class="row">
+        <InputGroup>
+          <FloatLabel variant="on">
+            <AutoComplete
+              v-model="item.ingredient"
+              :inputId="`ingredient-${index}`"
+              :suggestions="filteredIngredients"
+              @complete="searchIngredients"
+              optionLabel="nom"
+              forceSelection
+            />
+            <label :for="`ingredient-${index}`">Cherchez un ingrédient</label>
+          </FloatLabel>
+        </InputGroup>
 
-      <!-- Quantité de l'ingrédient -->
-      <InputGroup>
-        <FloatLabel variant="on">
-          <InputNumber
-            v-model="ingredientQuantity"
-            inputId="quantity"
-            showButtons
-            buttonLayout="horizontal"
-            :min="0"
-            :max="999"
-          />
-          <label for="quantity">Quantité</label>
-        </FloatLabel>
-      </InputGroup>
+        <InputGroup>
+          <FloatLabel class="stock" variant="on">
+            <InputNumber
+              v-model="item.quantity"
+              :inputId="`quantity-${index}`"
+              showButtons
+              buttonLayout="horizontal"
+              :min="0"
+              :max="999"
+            />
+            <label :for="`quantity-${index}`">Quantité</label>
+          </FloatLabel>
+        </InputGroup>
+        </div>
+      </template>
+      
 
-      <!-- Boutons d'action -->
       <div class="actions">
-        <Button type="button" label="Créer" icon="pi pi-check" :loading="loading" @click="createRecipe" />
-        <Button label="Annuler" class="p-button-secondary" @click="hideModal" />
+        <Button type="button" label="Créer la recette" icon="pi pi-check" :loading="loading" @click="createRecipe" />
+        <Button type="button" label="+ d'ingredients" class="p-button-secondary" @click="addIngredientField" />
       </div>
     </div>
   </Dialog>
@@ -150,6 +160,16 @@ watch(() => props.modelValue, (newVal) => {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+}
+
+.stock
+{
+    margin-left: 1vw !important;
+}
+
+.p-inputnumber
+{
+    width:10vw !important;
 }
 
 .row {
