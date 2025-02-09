@@ -150,7 +150,7 @@ const enregistrerIngredient = async () => {
       </InputGroup>
 
       <div class="actions">
-        <Button type="button" label="Enregistrer" icon="pi pi-search" :loading="loading" @click="enregistrerStock" />
+        {# <Button type="button" label="Enregistrer" icon="pi pi-search" :loading="loading" @click="enregistrerStock" /> #}
         <Button label="Annuler" class="p-button-secondary" @click="hideModal" />
       </div>
     </div>
