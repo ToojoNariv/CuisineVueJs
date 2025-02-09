@@ -50,6 +50,10 @@ const searchIngredients = async (event) => {
 const addIngredientField = () => {
   ingredientsList.value.push({ ingredient: null, quantity: null });
 };
+const removeIngredientField = (index) => {
+  ingredientsList.value.splice(index, 1);
+};
+
 
 const createRecipe = async () => {
   if (!selectedDish.value || ingredientsList.value.some(item => !item.ingredient || item.quantity === null)) {
@@ -143,7 +147,10 @@ watch(() => props.modelValue, (newVal) => {
 
       <div class="actions">
         <Button type="button" label="Créer la recette" icon="pi pi-check" :loading="loading" @click="createRecipe" />
-        <Button type="button" label="+ d'ingredients" class="p-button-secondary" @click="addIngredientField" />
+        <div class="row">
+            <Button type="button" label="+" class="p-button-secondary" @click="addIngredientField" />
+            <Button type="button" label="-" class="p-button-secondary ray" @click="removeIngredientField" />
+        </div>
       </div>
     </div>
   </Dialog>
@@ -169,6 +176,13 @@ watch(() => props.modelValue, (newVal) => {
 .row {
   display: flex;
   flex-direction: row;
+}
+
+.ray
+{
+    background-color: rgb(255, 58, 58) !important;
+    margin-left:0.5vw !important;
+
 }
 
 label 
