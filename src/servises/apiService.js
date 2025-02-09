@@ -47,8 +47,14 @@ export default
     return apiClient.post('insertingredient', filtre, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
-  }
+  },
   
+  getIngredientByName(nom) {
+    return apiClient.get('ingredientbyname', 
+    {
+      params: { nom }
+    });
+  }
   // update(filtre) {
   //   return apiClient.post('/update',filtre);
   // }

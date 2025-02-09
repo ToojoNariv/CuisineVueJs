@@ -174,7 +174,8 @@ body {
 
 @keyframes k { to { --k: 1 } }
 
-.el-dialog {
+.el-dialog 
+{
   --el-dialog-width: 50%;
   --el-dialog-bg-color: #f8f8f8 !important;
   --el-dialog-box-shadow: var(--el-box-shadow);
@@ -186,6 +187,7 @@ body {
   box-shadow: var(--el-dialog-box-shadow);
   height: 45%;
   box-sizing: border-box;
+  font-family: 'Matt_Trial Semibold';
   margin: var(--el-dialog-margin-top, 15vh) auto 50px;
   overflow-wrap: break-word;
   padding: 3vw !important;
@@ -250,6 +252,14 @@ h1
    margin-bottom: 4vh;
 }
 
+h2
+{
+  font-family: 'Matt_Trial_Black';
+  color: #111111;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
 .h1{
   margin-left: -12vw;
   margin-top: -18vh;
@@ -282,4 +292,9 @@ h1
 .p-inputgroup
 {
   margin-bottom: 2vh;
+}
+
+.p-inputnumber-horizontal .p-inputnumber-input 
+{
+    text-align: center !important;
 }

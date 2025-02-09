@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import apiService from '../../servises/apiService';
 import FloatLabel from 'primevue/floatlabel';
 import Button from 'primevue/button';
@@ -17,7 +17,8 @@ const photo = ref(null);
 const assets = ref(null);
 const loading = ref(false);
 const filteredIngredients = ref([]);
-const stockQuantity = ref(0);
+const stockQuantity = ref(null);
+const lesIngredient = ref(null);
 
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
@@ -48,22 +49,17 @@ const hideModal = () => {
   emit('update:modelValue', false);
 };
 
-const ingredients = ref([
-  { id: 1, nom: "Tomate" },
-  { id: 2, nom: "Oignon" },
-  { id: 3, nom: "Ail" },
-  { id: 4, nom: "Poivron" },
-  { id: 5, nom: "Poulet" },
-]);
-
-const searchIngredients = (event) => {
-  if (!event.query.trim()) {
-    filteredIngredients.value = ingredients.value;
-    return;
-  }
-  filteredIngredients.value = ingredients.value.filter((ingredient) =>
-    ingredient.nom.toLowerCase().includes(event.query.toLowerCase())
-  );
+const searchIngredients = async (event) => {
+    if (!event.query.trim()) {
+        filteredIngredients.value = [];
+        return;
+    }
+    try {
+        const response = await apiService.getIngredientByName(event.query);
+        filteredIngredients.value = response.data;
+    } catch (error) {
+        console.error('Erreur lors du chargement des ingrédients', error);
+    }
 };
 
 const updateVisibility = (value) => {
@@ -131,24 +127,25 @@ const enregistrerIngredient = async () => {
         <Button type="button" label="Enregistrer" icon="pi pi-search" :loading="loading" @click="enregistrerIngredient" />
       </div>
 
+      <h2>Ajouter des stocks</h2>
+
       <InputGroup>
         <FloatLabel variant="on">
-          <AutoComplete v-model="selectedIngredient" inputId="ingredient" :suggestions="filteredIngredients" @complete="searchIngredients" field="nom"/>
+          <AutoComplete v-model="lesIngredient" inputId="ingredient" :suggestions="filteredIngredients" @complete="searchIngredients" field="nom"/>
           <label for="ingredient">Nom de l'Ingrédient</label>
         </FloatLabel>
       </InputGroup>
 
       <InputGroup>
         <FloatLabel variant="on">
-          <InputNumber v-model="stockQuantity" showButtons buttonLayout="vertical" style="width: 8rem" :min="0" :max="999">
-            <template #incrementbuttonicon>
-              <span class="pi pi-plus" />
+          <InputNumber v-model="stockQuantity" showButtons buttonLayout="horizontal" :min="0" :max="999"/>
+          <label for="stock">Quantité en stock</label>
+          <template #incrementbuttonicon>
+                <span class="pi pi-plus" />
             </template>
             <template #decrementbuttonicon>
-              <span class="pi pi-minus" />
+                <span class="pi pi-minus" />
             </template>
-          </InputNumber>
-          <label for="stock">Quantité en stock</label>
         </FloatLabel>
       </InputGroup>
 
