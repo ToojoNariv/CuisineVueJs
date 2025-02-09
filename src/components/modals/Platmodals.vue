@@ -9,6 +9,7 @@ import InputText from 'primevue/inputtext';
 import FileUpload from 'primevue/fileupload';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
+import Dialog from 'primevue/dialog';
 
 
 const nom = ref('');
@@ -87,7 +88,7 @@ const enregistrerPlat = async () => {
 
 <template>
   <Toast />
-  <el-dialog :model-value="localVisible" title="Insertion Plat" modal-class="overide-animation" @update:model-value="updateVisibility" @close="hideModal">
+  <Dialog v-model:visible="localVisible" modal header="Insertion Plat" :closable="true" @hide="hideModal">
     <div class="card flex flex-wrap justify-center items-end gap-4">
       <InputGroup>
         <FloatLabel variant="on">
@@ -132,7 +133,7 @@ const enregistrerPlat = async () => {
       </div>
     </div>
 
-  </el-dialog>
+  </Dialog>
 </template>
 
 

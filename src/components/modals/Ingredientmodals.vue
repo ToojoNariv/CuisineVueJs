@@ -8,6 +8,8 @@ import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import FileUpload from 'primevue/fileupload';
 import AutoComplete from 'primevue/autocomplete';
+import Dialog from 'primevue/dialog';
+
 
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
@@ -23,7 +25,7 @@ const lesIngredient = ref(null);
 
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
-
+const localVisible = ref(props.modelValue);
 const toast = useToast();
 
 const onPhotoUpload = (event) => {
@@ -40,7 +42,6 @@ const load = () => {
         loading.value = false;
     }, 2000);
 };
-const localVisible = ref(props.modelValue);
 
 watch(() => props.modelValue, (newVal) => {
   localVisible.value = newVal;
@@ -51,16 +52,38 @@ const hideModal = () => {
 };
 
 const searchIngredients = async (event) => {
-    if (!event.query.trim()) {
-        filteredIngredients.value = [];
-        return;
-    }
-    try {
-        const response = await apiService.getIngredientByName(event.query);
-        filteredIngredients.value = response.data.map(ingredient => ingredient.nom);
-    } catch (error) {
-        console.error('Erreur lors du chargement des ingrédients', error);
-    }
+  if (!event.query.trim()) {
+    filteredIngredients.value = [];
+    return;
+  }
+  try {
+    const response = await apiService.getIngredientByName(event.query);
+    filteredIngredients.value = response.data;
+  } catch (error) {
+    console.error('Erreur lors du chargement des ingrédients', error);
+  }
+};
+
+const stockerIngredient = async () => {
+  if (!lesIngredient.value || !lesIngredient.value.id || stockQuantity.value === null) {
+    toast.add({ severity: 'warn', summary: 'Erreur', detail: 'Veuillez sélectionner un ingrédient et entrer un stock.', life: 5000 });
+    return;
+  }
+
+  loading.value = true;
+  try {
+    await apiService.envoyerStock({
+      id: lesIngredient.value.id,
+      stock: stockQuantity.value
+    });
+
+    toast.add({ severity: 'success', summary: 'Stock mis à jour', detail: 'Stock ajouté avec succès.', life: 5000 });
+  } catch (error) {
+    console.error('Erreur lors de l’ajout du stock', error);
+    toast.add({ severity: 'error', summary: 'Erreur', detail: 'Échec de l’ajout du stock.', life: 5000 });
+  } finally {
+    loading.value = false;
+  }
 };
 
 const updateVisibility = (value) => {
@@ -99,7 +122,7 @@ const enregistrerIngredient = async () => {
 
 <template>
   <Toast />
-  <el-dialog :model-value="localVisible" title="Insertion Ingredient et Stock" modal-class="overide-animation" @update:model-value="updateVisibility" @close="hideModal">
+  <Dialog v-model:visible="localVisible" modal header="Insertion Ingredient et Stock" :closable="true" @hide="hideModal">    
     <div class="card flex flex-wrap justify-center items-end gap-4">
       <InputGroup>
         <FloatLabel variant="on">
@@ -132,20 +155,18 @@ const enregistrerIngredient = async () => {
       <template class="row">
             <InputGroup>
                 <FloatLabel variant="on">
-                    <AutoComplete 
-                    v-model="lesIngredient" 
-                    inputId="ingredient" 
-                    :suggestions="filteredIngredients" 
-                    @complete="searchIngredients" 
-                    field="nom"/>                
-                <label for="ingredient">Nom de l'Ingrédient</label>
+                    <AutoComplete v-model="lesIngredient" inputId="ingredient" :suggestions="filteredIngredients" @complete="searchIngredients" optionLabel="nom" forceSelection />
+                    <template #option="slotProps">
+                      <div class="option">{{ slotProps.option.nom }}</div>
+                    </template>
+                <label for="ingredient">Cherchez un ingredient</label>
                 </FloatLabel>
             </InputGroup>
 
             <InputGroup>
                 <FloatLabel class="stock" variant="on">
                 <InputNumber v-model="stockQuantity" showButtons buttonLayout="horizontal" :min="0" :max="999"/>
-                <label for="stock">Quantité en stock</label>
+                <label for="stock">Ajouter un stock</label>
                 <template #incrementbuttonicon>
                         <span class="pi pi-plus" />
                     </template>
@@ -157,11 +178,11 @@ const enregistrerIngredient = async () => {
     </template>
 
       <div class="actions">
-        <Button type="button" label="Stocker" icon="pi pi-search" :loading="loading" @click="enregistrerStock" />
+        <Button type="button" label="Stocker" icon="pi pi-search" :loading="loading" @click="stockerIngredient" />
         <Button label="Annuler" class="p-button-secondary" @click="hideModal" />
       </div>
     </div>
-  </el-dialog>
+</Dialog>
 </template>
 
 <style scoped>
@@ -177,5 +198,12 @@ const enregistrerIngredient = async () => {
 .stock
 {
     margin-left: 1vw !important;
+}
+..p-autocomplete{
+  z-index: 10000 !important;
+}
+
+.p-toast {
+  z-index: 10001 !important;
 }
 </style>

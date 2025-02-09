@@ -252,6 +252,12 @@ h1
    margin-bottom: 4vh;
 }
 
+.p-dialog-title {
+  font-family: 'Matt_Trial_Black' !important;
+  font-weight: var(--p-dialog-title-font-weight);
+  font-size: var(--p-dialog-title-font-size);
+}
+
 h2
 {
   font-family: 'Matt_Trial_Black';

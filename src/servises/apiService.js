@@ -8,31 +8,6 @@ const apiClient = axios.create({
 
 export default 
 {
-  // getFiltre(filtre) 
-  // {
-  //   return apiClient.get('/filtre',{params: filtre})
-  // },
-
-  // getFiltre2(filtre) 
-  // {
-  //   return apiClient.get('/filtre2',{params: filtre})
-  // },
-
-  // getSommeFiltre(filtre) 
-  // {
-  //   return apiClient.get('/sommeFiltre',{params: filtre})
-  // },
-
-  // getDueFiltre(filtre) 
-  // {
-  //   return apiClient.get('/dueFiltre',{params: filtre})
-  // },
-
-  // getDueIndividuel(filtre) 
-  // {
-  //   return apiClient.get('/dueIndividuel',{params: filtre})
-  // },
-
   getRecette() 
   {
     return apiClient.get('recettes')
@@ -53,9 +28,9 @@ export default
     return apiClient.get('ingredientbyname', {
       params: { nom }
     });
+  },
+
+  envoyerStock(data) {
+    return apiClient.post('stockingredient', data);
   }
-  
-  // update(filtre) {
-  //   return apiClient.post('/update',filtre);
-  // }
 };
