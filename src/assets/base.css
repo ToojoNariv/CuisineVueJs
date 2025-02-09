@@ -336,9 +336,10 @@ span
   font-family: 'Matt_Trial' !important;
 }
 
-Button 
+.p-button-label
 {
-  font-family: 'Matt_Trial_Black' !important;
+  font-family: 'Matt_Trial_Semibold' !important;
+  font-weight: 700 !important;
 }
 
 .p-chart
