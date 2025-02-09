@@ -31,6 +31,10 @@ export default
   },
 
   envoyerStock(data) {
-    return apiClient.post('stockingredient', data);
+    return apiClient.post('stockingredient', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
 };

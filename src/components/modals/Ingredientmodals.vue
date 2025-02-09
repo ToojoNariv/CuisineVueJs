@@ -71,11 +71,13 @@ const stockerIngredient = async () => {
   }
 
   loading.value = true;
-  try {
-    await apiService.envoyerStock({
-      id: lesIngredient.value.id,
-      stock: stockQuantity.value
-    });
+  try 
+  {
+    let formData = new FormData();
+    formData.append('id', lesIngredient.value.id);
+    formData.append('nombre', stockQuantity.value);
+
+    await apiService.envoyerStock(formData);
 
     toast.add({ severity: 'success', summary: 'Stock mis à jour', detail: 'Stock ajouté avec succès.', life: 5000 });
   } catch (error) {
