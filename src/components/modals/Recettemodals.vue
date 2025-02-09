@@ -67,6 +67,8 @@ const createRecipe = async () => {
       }))
     };
 
+    console.log('Données envoyées :', recipeData);
+
     await apiService.creeRecette(recipeData);
 
     toast.add({ severity: 'success', summary: 'Recette créée', detail: 'La recette a été créée avec succès.', life: 5000 });

@@ -47,7 +47,7 @@ export default
     const formData = new FormData();
     formData.append('dishId', data.dishId);
     formData.append('ingredients', JSON.stringify(data.ingredients));
-
+  
     return apiClient.post('creerecette', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
