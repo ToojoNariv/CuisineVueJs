@@ -201,10 +201,6 @@ const enregistrerIngredient = async () => {
 {
     margin-left: 1vw !important;
 }
-..p-autocomplete{
-  z-index: 10000 !important;
-}
-
 .p-toast {
   z-index: 10001 !important;
 }

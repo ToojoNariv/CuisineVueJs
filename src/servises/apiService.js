@@ -30,6 +30,12 @@ export default
     });
   },
 
+  getPlatByName(nom) {
+    return apiClient.get('platbyname', {
+      params: { nom }
+    });
+  },
+
   envoyerStock(data) {
     return apiClient.post('stockingredient', data, {
       headers: {
