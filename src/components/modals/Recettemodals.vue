@@ -10,15 +10,13 @@ import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
-// Références pour les données du formulaire
-const selectedDish = ref(null); // Plat sélectionné
-const ingredientsList = ref([{ ingredient: null, quantity: null }]); // Liste des ingrédients et quantités
-const loading = ref(false); // État de chargement
-const filteredDishes = ref([]); // Liste des plats filtrés
-const filteredIngredients = ref([]); // Liste des ingrédients filtrés
-const toast = useToast(); // Toast pour les notifications
+const selectedDish = ref(null);
+const ingredientsList = ref([{ ingredient: null, quantity: null }]);
+const loading = ref(false);
+const filteredDishes = ref([]);
+const filteredIngredients = ref([]); 
+const toast = useToast();
 
-// Props et emits pour la gestion de la modal
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const localVisible = ref(props.modelValue);
@@ -49,12 +47,10 @@ const searchIngredients = async (event) => {
   }
 };
 
-// Fonction pour ajouter un nouvel ingrédient
 const addIngredientField = () => {
   ingredientsList.value.push({ ingredient: null, quantity: null });
 };
 
-// Fonction pour créer une recette
 const createRecipe = async () => {
   if (!selectedDish.value || ingredientsList.value.some(item => !item.ingredient || item.quantity === null)) {
     toast.add({ severity: 'warn', summary: 'Erreur', detail: 'Veuillez sélectionner un plat et remplir tous les ingrédients.', life: 5000 });
@@ -71,7 +67,7 @@ const createRecipe = async () => {
       }))
     };
 
-    await apiService.createRecipe(recipeData);
+    await apiService.creeRecette(recipeData);
 
     toast.add({ severity: 'success', summary: 'Recette créée', detail: 'La recette a été créée avec succès.', life: 5000 });
   } catch (error) {
@@ -82,12 +78,10 @@ const createRecipe = async () => {
   }
 };
 
-// Fonction pour fermer la modal
 const hideModal = () => {
   emit('update:modelValue', false);
 };
 
-// Watcher pour synchroniser la visibilité de la modal
 watch(() => props.modelValue, (newVal) => {
   localVisible.value = newVal;
 });

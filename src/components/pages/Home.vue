@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import PlatModal from '../modals/Platmodals.vue'
 import IngredientModal from '../modals/Ingredientmodals.vue'
+import GraphModal from '../modals/Stat.vue'
 import RecetteModal from '../modals/Recettemodals.vue'
 import InsertionCard from '../materials/InsertionCard.vue'
 import InsertionIngredients from '../materials/InsertionIngredients.vue'
@@ -11,6 +12,7 @@ import Stat from '../materials/Statistique.vue'
 const isPlatModalVisible = ref(false);
 const isIngredientModalVisible = ref(false);
 const isRecetteModalVisible = ref(false);
+const isGraphModalVisible = ref(false);
 
 const showPlatModal = () => {
   isPlatModalVisible.value = true;
@@ -22,6 +24,10 @@ const showIngredientModal = () => {
 
 const showRecetteModal = () => {
   isRecetteModalVisible.value = true;
+};
+
+const showGraphModal = () => {
+  isGraphModalVisible.value = true;
 };
 
 </script>
@@ -40,12 +46,13 @@ const showRecetteModal = () => {
     </div>
     <div class="column">
       <InsertionRecette @click="showRecetteModal" />
-      <Stat />
+      <Stat @click="showGraphModal"/>
     </div>
   </div>
   <PlatModal v-model="isPlatModalVisible" />
   <IngredientModal v-model="isIngredientModalVisible" />
   <RecetteModal v-model="isRecetteModalVisible" />
+  <GraphModal v-model="isGraphModalVisible" />
 </template>
 
 <script>
