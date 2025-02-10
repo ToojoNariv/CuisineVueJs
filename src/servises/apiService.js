@@ -12,6 +12,10 @@ export default
     return apiClient.get('recettes')
   },
 
+  getVentesParNom(nom) {
+    return apiClient.get(`ventesparnom/${nom}`);
+  },
+
   getRecette2(id) {
       return apiClient.get(`recettesbyid/${id}`);
   },

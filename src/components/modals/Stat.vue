@@ -6,41 +6,64 @@ import AutoComplete from 'primevue/autocomplete';
 import InputGroup from 'primevue/inputgroup';
 import FloatLabel from 'primevue/floatlabel';
 import apiService from '../../servises/apiService';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';   
 
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
+const ventes = ref([[], []]);
 const localVisible = ref(props.modelValue);
 
 const selectedDish = ref(null);
 const chartData = ref();
 const chartOptions = ref();
 const filteredDishes = ref([]);
+const selectedDishData = ref(null);
+
+
+const size = ref({ label: 'Normal', value: 'null' });
+const sizeOptions = ref([
+    { label: 'Small', value: 'small' },
+    { label: 'Normal', value: 'null' },
+    { label: 'Large', value: 'large' }
+]);
 
 const monthNames = [
     "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
     "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
 ];
 
-const ventes = ref([[], []]);
+const getVentes = async () => {
+    try {
+        const response = await apiService.getVente();
+        if (response && response.data) {
+            const recetteIds = [...new Set(response.data.map(v => v.recette.split('/').pop()))];
+            const recetteDetails = await Promise.all(recetteIds.map(id => apiService.getRecette2(id)));
+            const recettesMap = Object.fromEntries(recetteDetails.map(r => [r.data.id, r.data]));
+            const ventesAvecDetails = response.data.map(vente => {
+                const recetteId = vente.recette.split('/').pop();
+                return {
+                    ...vente,
+                    ...recettesMap[recetteId],
+                    image: recettesMap[recetteId].image
+                };
+            });
+
+            ventes.value = [ventesAvecDetails, []];
+        }
+    } catch (error) {
+        console.error("Erreur lors de la récupération des ventes :", error);
+    }
+};
+
 onMounted(() => {
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
     getVentes();
     getVentesCharte();
 });
-
-const searchDishes = async (event) => {
-  if (!event.query.trim()) {
-    filteredDishes.value = [];
-    return;
-  }
-  try {
-    const response = await apiService.getPlatByName(event.query);
-    filteredDishes.value = response.data;
-  } catch (error) {
-    console.error('Erreur lors du chargement des plats', error);
-  }
-};
 
 const getVentesCharte = async () => {
     try {
@@ -67,30 +90,6 @@ const getVentesCharte = async () => {
         console.error("Erreur lors de la récupération des ventes :", error);
     }
 };
-
-const getVentes = async () => {
-    try {
-        const response = await apiService.getVente();
-        if (response && response.data) {
-            const recetteIds = [...new Set(response.data.map(v => v.recette.split('/').pop()))];
-            const recetteDetails = await Promise.all(recetteIds.map(id => apiService.getRecette2(id)));
-            const recettesMap = Object.fromEntries(recetteDetails.map(r => [r.data.id, r.data]));
-            const ventesAvecDetails = response.data.map(vente => {
-                const recetteId = vente.recette.split('/').pop();
-                return {
-                    ...vente,
-                    ...recettesMap[recetteId],
-                    image: recettesMap[recetteId].image
-                };
-            });
-            
-            ventes.value = [ventesAvecDetails, []];
-        }
-    } catch (error) {
-        console.error("Erreur lors de la récupération des ventes :", error);
-    }
-};
-
         
 const setChartData = (months, totalPrix, totalVentes) => {
     const documentStyle = getComputedStyle(document.documentElement);
@@ -153,11 +152,53 @@ const setChartOptions = () => {
     };
 }
 
+const searchDishes = async (event) => {
+  if (!event.query.trim()) {
+    filteredDishes.value = [];
+    return;
+  }
+  try {
+    const response = await apiService.getPlatByName(event.query);
+    filteredDishes.value = response.data;
+  } catch (error) {
+    console.error('Erreur lors du chargement des plats', error);
+  }
+};
+
+
+const selectedDishVentes = ref({ totalPrix: 0, totalVentes: 0 });
+
+const fetchVentesForDish = async () => {
+    if (!selectedDish.value || !selectedDish.value.nom) {
+        console.warn("selectedDish est null ou ne contient pas de nom :", selectedDish.value);
+        return;
+    }
+    try {
+        console.log("Fetching data for dish:", selectedDish.value.nom);
+        const response = await apiService.getVentesParNom(selectedDish.value.nom);
+        if (response && response.data) {
+            selectedDishVentes.value = response.data;
+        } else {
+            console.warn("Aucune donnée reçue pour ce plat.");
+        }
+    } catch (error) {
+        console.error("Erreur lors de la récupération des ventes par plat", error);
+    }
+};
+
 
 
 const hideModal = () => {
   emit('update:modelValue', false);
 };
+
+watch(selectedDish, async (newVal) => {
+    console.log("selectedDish changé :", newVal);
+    if (newVal) {
+        await fetchVentesForDish();
+    }
+});
+
 
 watch(() => props.modelValue, (newVal) => {
     localVisible.value = newVal;
@@ -192,7 +233,6 @@ const getImageUrl = (image) => {
         <h2>Liste des ventes</h2>
         <PickList v-model="ventes" dataKey="id" breakpoint="1400px">
                 <template #option="{ option, selected }">
-                    {{ console.log("Vente option :", option) }}
                     <div class="flex flex-wrap p-1 items-center gap-4 w-full">
                         <img class="w-12 shrink-0 rounded" :src="'data:image/png;base64,' + getImageUrl(option.image)" />
 
@@ -206,17 +246,42 @@ const getImageUrl = (image) => {
         <h2>Total de vente par plat</h2>
         <InputGroup>
         <FloatLabel variant="on">
-          <AutoComplete
-            v-model="selectedDish"
-            inputId="dish"
-            :suggestions="filteredDishes"
-            @complete="searchDishes"
-            optionLabel="nom"
-            forceSelection
-          />
-          <label for="dish">Cherchez un plat</label>
+            <AutoComplete
+                v-model="selectedDish"
+                inputId="id"
+                :suggestions="filteredDishes"
+                @complete="searchDishes"
+                optionLabel="nom"
+            />
+
+
+          <label for="id">Cherchez un plat</label>
         </FloatLabel>
       </InputGroup>
+
+      <div v-if="selectedDish">
+        <div class="card">
+            <h2>Informations pour {{ selectedDish.nom }}</h2>
+
+            <div class="flex justify-center mb-6">
+                <SelectButton v-model="size" :options="sizeOptions" optionLabel="label" dataKey="label" />
+            </div>
+
+            <DataTable :value="[selectedDishVentes]" :size="size.value" tableStyle="min-width: 30rem">
+                <Column field="nom" header="Nom du plat">
+                    <template #body="slotProps">
+                        {{ selectedDish.nom }}
+                    </template>
+                </Column>
+                <Column field="totalVentes" header="Nombres des ventes"></Column>
+                <Column field="totalPrix" header="Total des prix de vente(Ar)">
+                    <template #body="slotProps">
+                        {{ slotProps.data.totalPrix.toLocaleString('fr-FR') }} Ar
+                    </template>
+                </Column>
+            </DataTable>
+        </div>
+    </div>
 
     </Dialog>
 </template>
