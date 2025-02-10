@@ -74,4 +74,49 @@ export default {
   flex: 1;
   margin: 10px;
 }
+
+@media (max-width: 435px) 
+{
+  .row {
+    flex-direction: column;
+  }
+
+  .p-dialog {
+    width: 95% !important;
+  }
+
+  .column {
+    flex: 1 1 100%;
+    margin: 5px 0;
+  }
+
+  .p-datatable {
+      position: relative;
+      width: 84vw !important;
+  }
+
+  .p-chart {
+    display: flex !important;
+    box-sizing: border-box;
+    height: 35vh !important;
+    width: 84vw !important;
+  }
+
+  .Card 
+  {
+    position: relative;
+    width: 100%;
+    height: 24vh;
+    margin-right: 1vw;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  h1 {
+    font-size: 1.6rem;
+    text-align: left;
+    line-height: 2.7vh;
+    margin-top: 3vh;
+  }
+}
 </style>
