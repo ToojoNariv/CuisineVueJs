@@ -376,4 +376,39 @@ span .font-bold
     line-height: 6vh !important;
     padding: 34px 56px !important;
 }
+.card2:hover .overlay[data-v-5bc56b41] 
+{
+  top: 50%;
+  left: 50%;
+  background-color: rgb(0, 255, 34, 0.4);
+  font-size: 3em !important;
+  line-height: 6vh !important;
+  padding: 34px 56px !important;
+}
+
+.card3:hover .overlay[data-v-c971cc65] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: rgba(255, 0, 225, 0.6);
+  color: white;
+  font-size: 3em !important;
+  line-height: 5vh !important;
+  padding: 34px 56px !important;
+  font-weight: bold;
+  font-family: 'Matt_Trial_Black' !important;
+}
+
+.card4:hover .overlay[data-v-c2040d9a] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: rgba(0, 255, 221, 0.4);
+  color: white;
+  font-size: 3em !important;
+  line-height: 6vh !important;
+  padding: 34px 56px !important;
+  font-weight: bold;
+  font-family: 'Matt_Trial_Black' !important;
+}
 }
