@@ -39,14 +39,14 @@ const showGraphModal = () => {
         <h1>Gestion Sakafo</h1>
       </div>
 
-      <InsertionCard @click="showPlatModal" />
+      <InsertionCard class="Card" @click="showPlatModal" />
     </div>
     <div>
-      <InsertionIngredients @click="showIngredientModal" />
+      <InsertionIngredients class="Card" @click="showIngredientModal" />
     </div>
     <div class="column">
-      <InsertionRecette @click="showRecetteModal" />
-      <Stat @click="showGraphModal"/>
+      <InsertionRecette class="Card" @click="showRecetteModal" />
+      <Stat class="Card" @click="showGraphModal"/>
     </div>
   </div>
   <PlatModal v-model="isPlatModalVisible" />
@@ -67,8 +67,11 @@ export default {
   display: flex;
   flex-direction: row;
 }
+
 .column {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  margin: 10px;
 }
 </style>
