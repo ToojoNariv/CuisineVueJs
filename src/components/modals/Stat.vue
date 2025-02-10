@@ -2,14 +2,19 @@
 import { watch, ref, onMounted } from "vue";
 import Dialog from 'primevue/dialog';
 import PickList from 'primevue/picklist';
+import AutoComplete from 'primevue/autocomplete';
+import InputGroup from 'primevue/inputgroup';
+import FloatLabel from 'primevue/floatlabel';
 import apiService from '../../servises/apiService';
 
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const localVisible = ref(props.modelValue);
 
+const selectedDish = ref(null);
 const chartData = ref();
 const chartOptions = ref();
+const filteredDishes = ref([]);
 
 const monthNames = [
     "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
@@ -23,6 +28,19 @@ onMounted(() => {
     getVentes();
     getVentesCharte();
 });
+
+const searchDishes = async (event) => {
+  if (!event.query.trim()) {
+    filteredDishes.value = [];
+    return;
+  }
+  try {
+    const response = await apiService.getPlatByName(event.query);
+    filteredDishes.value = response.data;
+  } catch (error) {
+    console.error('Erreur lors du chargement des plats', error);
+  }
+};
 
 const getVentesCharte = async () => {
     try {
@@ -154,8 +172,13 @@ const formatDate = (isoString) => {
     return date.toLocaleDateString('fr-FR', options); 
 };
 const getImageUrl = (image) => {
-    const cleanedBase64 = image.replace(/\s/g, '');
+    if (!image) return '';
+    const cleanedImage = image.replace(/^data:image\/\w+;base64,/, '').trim();
+
+    return cleanedImage;
 };
+
+
 
 </script>
 
@@ -171,15 +194,29 @@ const getImageUrl = (image) => {
                 <template #option="{ option, selected }">
                     {{ console.log("Vente option :", option) }}
                     <div class="flex flex-wrap p-1 items-center gap-4 w-full">
-                        <img 
-                            class="w-12 shrink-0 rounded" 
-                            :src="'data:image/png;base64,' + getImageUrl(option.image)" />
+                        <img class="w-12 shrink-0 rounded" :src="'data:image/png;base64,' + getImageUrl(option.image)" />
+
                         <div class="flex-1 flex flex-col"><span class="font-medium text-sm">{{ option.nom }}</span></div>
                         <span >{{ option.prix }} Ar</span><br>
                         <span class="font-bold">{{ formatDate(option.dateAchat) }}</span>
                     </div>
                 </template>
             </PickList>
+
+        <h2>Total de vente par plat</h2>
+        <InputGroup>
+        <FloatLabel variant="on">
+          <AutoComplete
+            v-model="selectedDish"
+            inputId="dish"
+            :suggestions="filteredDishes"
+            @complete="searchDishes"
+            optionLabel="nom"
+            forceSelection
+          />
+          <label for="dish">Cherchez un plat</label>
+        </FloatLabel>
+      </InputGroup>
 
     </Dialog>
 </template>
