@@ -338,7 +338,7 @@ span
 
 .p-button-label
 {
-  font-family: 'Matt_Trial_Semibold' !important;
+  font-family: 'Matt_Trial Semibold' !important;
   font-weight: 700 !important;
 }
 
@@ -348,4 +348,11 @@ span
     box-sizing: border-box ;
     height: 48vh !important;
     width: 61vw !important;
+}
+
+
+span .font-bold
+{
+   font-family: 'Matt_Trial Semibold'!important;
+   color: #111111;
 }

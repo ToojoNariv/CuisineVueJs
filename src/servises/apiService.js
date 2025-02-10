@@ -12,6 +12,19 @@ export default
     return apiClient.get('recettes')
   },
 
+  getRecette2(id) {
+      return apiClient.get(`recettesbyid/${id}`);
+  },
+
+  getVente() 
+  {
+    return apiClient.get('ventes')
+  },
+  ventesParMois() {
+    return apiClient.get('ventesparmois');
+  },
+
+
   insertionRecette(filtre) {
     return apiClient.post('insertplat', filtre, {
       headers: { 'Content-Type': 'multipart/form-data' }
