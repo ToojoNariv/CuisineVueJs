@@ -81,10 +81,6 @@ export default {
     flex-direction: column;
   }
 
-  .p-dialog {
-    width: 95% !important;
-  }
-
   .column {
     flex: 1 1 100%;
     margin: 5px 0;
