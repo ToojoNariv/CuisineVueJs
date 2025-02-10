@@ -367,18 +367,6 @@ span .font-bold
     width: 84vw !important;
   }
 
-  .card4[data-v-c2040d9a] {
-    position: relative;
-    width: 33vw;
-    height: 45vh;
-    margin-bottom: 3vh;
-    margin-right: 1vw;
-    margin-top: 1vh !important;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
   .p-dialog {
     width: 95% !important;
   }

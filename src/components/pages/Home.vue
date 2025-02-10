@@ -46,7 +46,7 @@ const showGraphModal = () => {
     </div>
     <div class="column">
       <InsertionRecette class="Card" @click="showRecetteModal" />
-      <Stat class="Card" @click="showGraphModal"/>
+      <Stat class="Card4" @click="showGraphModal"/>
     </div>
   </div>
   <PlatModal v-model="isPlatModalVisible" />
@@ -96,6 +96,17 @@ export default {
     box-sizing: border-box;
     height: 35vh !important;
     width: 84vw !important;
+  }
+  .Card4{
+    margin-top: 1vh !important;
+    position: relative;
+    width: 100%;
+    height: 24vh;
+    margin-right: 1vw;
+    margin-bottom: 2vh;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   .Card 
