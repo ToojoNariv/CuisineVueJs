@@ -8,7 +8,6 @@ WORKDIR /app
 COPY package*.json ./
 COPY vite.config.js ./
 
-RUN npm uninstall vue-gtag
 # Étape 4 : Installer les dépendances
 RUN npm install
 
@@ -19,7 +18,7 @@ COPY . .
 RUN npm cache clean --force && npm install
 
 # Étape 7 : Construire l'application
-RUN npm run dev
+RUN npm run build
 
 # Étape 8 : Utiliser une image légère pour l'exécution
 FROM nginx:alpine AS production-stage
