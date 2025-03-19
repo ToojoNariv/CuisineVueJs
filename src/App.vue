@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <home/>
+    <Login/>
   </div>
 </template>
 
 <script setup>
-import Home from "./components/pages/Home.vue";
+import Login from "./components/modals/Login.vue";
 </script>
 
 

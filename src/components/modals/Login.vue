@@ -11,16 +11,13 @@
   
         <div class="p-field">
           <label for="password">Mot de passe</label>
-          <Password id="password" v-model="password" placeholder="Entrez votre mot de passe" :feedback="false" required />
+          <Password id="password" class="pass" v-model="password" placeholder="Entrez votre mot de passe" :feedback="false" required />
         </div>
   
         <Button type="submit" label="Se connecter" class="p-button-primary" />
       </form>
   
-      <!-- Message d'erreur -->
       <Message v-if="errorMessage" severity="error">{{ errorMessage }}</Message>
-  
-      <!-- Message de succès -->
       <Message v-if="successMessage" severity="success">{{ successMessage }}</Message>
     </div>
   </template>
@@ -108,6 +105,7 @@
   h1 {
     text-align: center;
     margin-bottom: 20px;
+    color: rgb(31, 31, 31);
   }
   
   .p-field {
@@ -117,10 +115,19 @@
   label {
     display: block;
     margin-bottom: 0.5rem;
+    color: rgb(31, 31, 31);
   }
   
   .p-button {
     width: 100%;
     margin-top: 1rem;
+  }
+  .p-inputtext
+  {
+    width: 100%;
+  }
+  .pass
+  {
+    width: 100% !important;
   }
   </style>
